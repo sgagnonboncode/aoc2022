@@ -17,7 +17,6 @@ public class RPSMatch
     public Hand Other;
     public Hand Player;
 
-    public int OtherScore;
     public int PlayerScore;
 
     public RPSMatch(char other, char player, bool relativeMode = false)
@@ -38,58 +37,17 @@ public class RPSMatch
 
     private void AssignOtherHand(char hand)
     {
-        switch (hand)
-        {
-            case 'A':
-                Other = Hand.Rock;
-                break;
-            case 'B':
-                Other = Hand.Paper;
-                break;
-            case 'C':
-                Other = Hand.Scissor;
-                break;
-            default:
-                throw new ArgumentException();
-        }
+        Other = (Hand) (hand - 'A' + 1);
     }
 
     private void AssignPlayerHand(char hand)
     {
-        switch (hand)
-        {
-            case 'X':
-                Player = Hand.Rock;
-                break;
-            case 'Y':
-                Player = Hand.Paper;
-                break;
-            case 'Z':
-                Player = Hand.Scissor;
-                break;
-            default:
-                throw new ArgumentException();
-        }
+        Player = (Hand)(hand - 'X' + 1);
     }
 
     private void AssignRelativeHand(char desiredOutcome)
     {
-        var shift = 0;
-        switch (desiredOutcome)
-        {
-            case 'X':
-                shift = -1;
-                break;
-            case 'Y':
-                shift = 0;
-                break;
-            case 'Z':
-                shift = +1;
-                break;
-            default:
-                throw new ArgumentException();
-        }
-
+        var shift = (int)(desiredOutcome - 'Y');
         var hand = (int)Other + shift;
         if (hand == 4)
         {
@@ -106,12 +64,10 @@ public class RPSMatch
     private void ComputeScore()
     {
         PlayerScore = (int)Player;
-        OtherScore = (int)Other;
 
         if (Other == Player)
         {
             PlayerScore += DrawScore;
-            OtherScore += DrawScore;
             return;
         }
 
@@ -120,20 +76,8 @@ public class RPSMatch
             (Other == Hand.Scissor && Player == Hand.Rock))
         {
             PlayerScore += VictoryScore;
-            return;
         }
-
-        if ((Other == Hand.Paper && Player == Hand.Rock) || 
-            (Other == Hand.Scissor && Player == Hand.Paper) || 
-            (Other == Hand.Rock && Player == Hand.Scissor))
-        {
-            OtherScore += VictoryScore;
-            return;
-        }
-
-        throw new ArgumentException();
     }
-
 }
 
 [SolverMap(2)]
