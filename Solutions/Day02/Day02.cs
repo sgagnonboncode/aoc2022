@@ -1,6 +1,6 @@
 using AOC2022.Lib;
 
-namespace AOC2022.Solutions.Day01;
+namespace AOC2022.Solutions.Day02;
 
 public enum Hand
 {
