@@ -83,13 +83,13 @@ public class RPSMatch
 [SolverMap(2)]
 public class Day02 : Solver
 {
-    public int PartA()
+    public object PartA()
     {
         var strategyGuide = ParseStrategyGuide();
         return strategyGuide.Sum(m => m.PlayerScore);
     }
 
-    public int PartB()
+    public object PartB()
     {
         var strategyGuide = ParseStrategyGuide(true);
         return strategyGuide.Sum(m => m.PlayerScore);

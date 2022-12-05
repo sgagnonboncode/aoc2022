@@ -50,13 +50,13 @@ public class Day04 : Solver
         }
     }
 
-    public int PartA()
+    public object PartA()
     {
         var teamAssignments = ParseAssignments();
         return teamAssignments.Where(t=> t.HasCompleteOverlap()).Count();
     }
 
-    public int PartB()
+    public object PartB()
     {
         var teamAssignments = ParseAssignments();
         return teamAssignments.Where(t=> t.HasSomeOverlap()).Count();

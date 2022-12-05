@@ -6,13 +6,13 @@ namespace AOC2022.Solutions.Day01;
 [SolverMap(1)]
 public class Day01 : Solver
 {
-    public int PartA()
+    public object PartA()
     {
         var calories = ParseCaloriesAllocation();
         return calories.Max();
     }
 
-    public int PartB()
+    public object PartB()
     {
         var calories = ParseCaloriesAllocation();
         return calories.OrderDescending().Take(3).Sum();

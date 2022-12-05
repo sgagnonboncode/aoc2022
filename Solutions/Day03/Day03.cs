@@ -10,7 +10,7 @@ public class Day03 : Solver
         return char.IsLower(item) ? (item -'a' + 1) : (item -'A' + 27);
     }
 
-    public int PartA()
+    public object PartA()
     {
         var lines = ParseRucksacks();
 
@@ -35,7 +35,7 @@ public class Day03 : Solver
         return sumOfPriorities;
     }
 
-    public int PartB()
+    public object PartB()
     {
         var lines = ParseRucksacks();
 

@@ -10,6 +10,6 @@ public class SolverMapAttribute: Attribute {
 }
 
 public interface Solver {
-    int PartA();
-    int PartB();
+    object PartA();
+    object PartB();
 }
