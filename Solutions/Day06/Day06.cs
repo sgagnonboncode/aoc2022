@@ -8,33 +8,32 @@ public class Day06 : Solver
     public object PartA()
     {
         var packet = ReadPacket();
-
-        for (int i = 3; i < packet.Length; i++)
-        {
-            var lastFour = new HashSet<char>{packet[i-3],packet[i-2],packet[i-1],packet[i]};
-            if(lastFour.Count()==4)
-            {
-                return i+1;
-            }
-        }
-
-        throw new Exception();
+        return DetectMarkerPosition(packet,4);
     }
 
     public object PartB()
     {
         var packet = ReadPacket();
+        return DetectMarkerPosition(packet,14);
+    }
 
-        for (int i = 13; i < packet.Length; i++)
+    private int DetectMarkerPosition(char[] packet, int markerSize)
+    {
+        var validationHashset = new HashSet<char>();
+        int offset = markerSize-1;
+
+        for (int i = offset; i < packet.Length; i++)
         {
-            var lastFourteen = new HashSet<char>(packet.Skip(i-13).Take(14));
-            if(lastFourteen.Count()==14)
+            validationHashset.UnionWith(packet.Skip(i - offset).Take(markerSize));
+            if (validationHashset.Count() == markerSize)
             {
-                return i+1;
+                return i + 1;
             }
+
+            validationHashset.Clear();
         }
 
-        throw new Exception();
+        return -1;
     }
 
     private char[] ReadPacket()
