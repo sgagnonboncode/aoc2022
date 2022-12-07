@@ -1,7 +1,7 @@
 using System.Text.RegularExpressions;
 using AOC2022.Lib;
 
-namespace AOC2022.Solutions.Day04;
+namespace AOC2022.Solutions.Day07;
 
 [SolverMap(7)]
 public class Day07 : Solver

@@ -1,6 +1,6 @@
 using AOC2022.Lib;
 
-namespace AOC2022.Solutions.Day04;
+namespace AOC2022.Solutions.Day06;
 
 [SolverMap(6)]
 public class Day06 : Solver
