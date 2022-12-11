@@ -101,7 +101,7 @@ public class MonkeyActor
             {
                 // ceci est valide car les diviseurs sont des nombre premiers
                 //  en ramenant les nombres en deca du plus petit denominateur, on controle
-                //  que l'operation d'exposant de fera bas sauter la limite de 64bit de nombre entier
+                //  que l'operation d'exposant de fera pas sauter la limite de 64bit de nombre entier
                 // 
                 // par exemple, pour le nombre 4000 , avec lcd 96577
                 // si on 4000*4000 = 16 000 000
