@@ -99,37 +99,53 @@ public class MonkeyActor
 
             if (veryWorriedAboutMonkeys)
             {
-                // ceci est valide car les diviseurs sont des nombre premiers
-                //  en ramenant les nombres en deca du plus petit denominateur, on controle
-                //  que l'operation d'exposant de fera pas sauter la limite de 64bit de nombre entier
+                // Les operations des singes sont trop anxiogenes pour etre contenues dans des nombres 64bit.
+                // Pour contourner le probleme, on a se servir du fait que seul le nombre de passage compte:
+                //   le programme demeure valide tant qu'on peut faire le 'test du diviseur' qui permet
+                //   de savoir a qui lancer l'objet. La valeur elle même n'a pas d'importance si elle
+                //   produit un résultat équivalent lors du 'test du diviseur'.
                 // 
-                // par exemple, pour le nombre 4000 , avec lcd 96577
-                // si on 4000*4000 = 16 000 000
+                // L'opérateur modulo (%) possède une propriété d'intérêt pour le problème:
+                //   x % n = ( x % M ) % n , si n est un facteur de M
+                //
+                // Preuve:
+                //  1) Soit  k = x % M
+                //  2) Par définition de l'operateur %, il existe un nombre 'a' tel que  x = a*M + k , avec 0 <= k < M.
+                //       Par exemple,  si le résultat de  x % M = 3 , il existe une valeur 'a' qui viendra faire la boucle sur l'opérateur %
+                //          pour revenir au même résultat. 
+                //  3) Puisque 'n' est un facteur de 'M', il existe un nombre 'b' tel que M = b * n, ainsi
+                //         x = a*M + K = a*b*n + k
+                //  4) En appliquant % n sur les deux cotés de l'équation:
+                //     a) x % n = (a*b*n +k)%n = k % n , car a*b*n % n =0 
+                //     b) en utilisant 1) :   x % n  = k % n = ( x % M ) % n    
+                // 
+                // On va choisir comme valeur M le produit de tous les diviseurs de tous les singes, (plus petit commun denominateur) 
+                //  M = (div 0)(div 1)(div 2)...
+                // Ainsi, l'équivalence  x % n = ( x % M ) % n sera tjrs valide.
+                // 
+                // par exemple, pour le nombre (x) 4000 , avec (n) = 13 et (M) lcd 96577 , soit (7429 * 13) , si on eleve au carre:
+                //   4000*4000 = 16 000 000
                 //  16000000 % 96577 = 64795
                 //
                 //    64795 % 13 = 3
                 // 16000000 % 13 = 3   car  16000000 / 64795 = 15 935 205 , qui peut etre exprime en (1 225 785)(13)
                 //
-                //  le nombre 4000 peut etre exprime :  (307)(13) + 9 , 
+                // le nombre 4000 peut etre exprime :  (307)(13) + 9 , 
                 //   au carre :  (307)(13)(307)(13) + (2)(9)(307)(13) + (9)(9)
-                //         =>          ( 15928081 + 71838  )         +    81
-                //      on peut ignorer les facteur de 13 de l equation car leur modulo 13 donnera zero
-                //    ->  9 * 9  = 81    , 81 % 13 = 3
+                //   on peut ignorer les facteur de 13 de l equation car leur modulo 13 donnera zero
+                //   (4000*4000) % 13 ->  (9 * 9) % 13 = 3
                 //
-                //  lcd 96577 -> (7429)(13)
-                //
-                //   le resultat demeure vrai meme si on continue
+                // le resultat demeure vrai meme si on continue
                 //   ( 15999919 + 81 ) * (15,999,919 + 81)
                 // =>   ((1230763)(13) + 81 ) * ((1230763)(13) + 81 )
                 // =>      (1230763)(13)(1230763)(13) + (2)(81)(1230763)(13) + (81)(81)
-                //  en decomposant 81, ->
-                //   ((6)(13)+3) ((6)(13)+3)  ->   3*3 = 9
+                //  en decomposant 81 en (6)(13) + 3, ->
+                //  ( ((6)(13)+3) ((6)(13)+3) ) % 13 ->   (3*3) % 13 = 9
                 //
                 //   si on compare avec le resultat reduit par le lcd:
                 //   64795 * 64795  = 4198392025   ,  4198392025 % 13 = 9
                 //      car  64795 peut s exprimer (4984)(13) + 3
-                //
-                //  l operation sera tjrs valide car le LCD viendra eliminer la partie qui n'est pas importante pour le test du diviseur.
+
                 next = next % leastCommonDenominator;
             }
             else
